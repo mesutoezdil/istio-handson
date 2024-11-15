@@ -112,7 +112,7 @@ This will install the Istio 1.24.0 profile "default" into the cluster. Proceed? 
 ✔ Ingress gateways installed 🛬
 ✔ Installation complete
 ```
-<img width="479" alt="Screenshot 2024-11-15 at 14 50 46" src="https://github.com/user-attachments/assets/7d67be1e-8d44-48d5-a61d-5e89f4e5c46e">
+<img width="852" alt="Screenshot 2024-11-15 at 15 55 36" src="https://github.com/user-attachments/assets/c2d8e25f-47d0-4d45-8990-acca8d1539da">
 
 The Istio control plane and ingress gateway are successfully installed in the cluster.
 
