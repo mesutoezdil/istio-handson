@@ -136,6 +136,75 @@ NAME                                   READY   STATUS    RESTARTS   AGE
 istio-ingressgateway-8cd544cbd-wnvlg   1/1     Running   0          8m8s
 istiod-6b5fb7b484-7lbjw                1/1     Running   0          8m16s
 ```
+
+### 15. **Apply Kubernetes Manifest File**
+
+```bash
+kubectl apply -f kubernetes-manifests.yaml
+```
+
+This command deploys all services, deployments, and service accounts defined in the provided `kubernetes-manifests.yaml` file to the Kubernetes cluster.
+
+**Expected Output:**
+```plaintext
+deployment.apps/emailservice created
+service/emailservice created
+serviceaccount/emailservice created
+...
+deployment.apps/adservice created
+service/adservice created
+serviceaccount/adservice created
+```
+
+---
+
+### 16. **Verify Pods in the Default Namespace**
+
+```bash
+kubectl get pod
+```
+
+This command lists all the pods deployed in the default namespace.
+
+**Example Initial Output:**
+```plaintext
+NAME                                     READY   STATUS              RESTARTS   AGE
+adservice-997b6fc95-4fhmn                0/1     Running             0          20s
+cartservice-59d7459964-br6q5             0/1     Running             0          21s
+...
+recommendationservice-7d59447ccc-bsbfp   0/1     ContainerCreating   0          22s
+redis-cart-558f8d8d44-5k8g8              1/1     Running             0          21s
+```
+
+Pods might initially show as `ContainerCreating` or `Init:0/1` because Kubernetes is pulling images and starting containers.
+
+---
+
+### 17. **Check Pods Again After Initialization**
+
+```bash
+kubectl get pod
+```
+
+**Expected Final Output:**
+```plaintext
+NAME                                     READY   STATUS    RESTARTS   AGE
+adservice-997b6fc95-4fhmn                1/1     Running   0          80s
+cartservice-59d7459964-br6q5             1/1     Running   0          81s
+checkoutservice-855ff8d99-fwwnw          1/1     Running   0          82s
+currencyservice-b7dcd96f5-9zqpl          1/1     Running   0          81s
+emailservice-69cfd9755c-dl2vs            1/1     Running   0          82s
+frontend-c48bb8c56-bjf7b                 1/1     Running   0          82s
+loadgenerator-6fd8676bfc-dn998           1/1     Running   0          81s
+paymentservice-7c56f54965-7lzck          1/1     Running   0          82s
+productcatalogservice-69878b7d5c-b2c46   1/1     Running   0          82s
+recommendationservice-7d59447ccc-bsbfp   1/1     Running   0          82s
+redis-cart-558f8d8d44-5k8g8              1/1     Running   0          81s
+shippingservice-fb69f4985-7z69r          1/1     Running   0          81s
+```
+
+At this point, all pods should be in the `Running` state.
+
 ---
 
 
