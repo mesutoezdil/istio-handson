@@ -208,6 +208,8 @@ shippingservice-fb69f4985-7z69r          1/1     Running   0          81s
 At this point, all pods should be in the `Running` state.
 
 ---
+<img width="944" alt="Screenshot 2024-11-15 at 15 22 04" src="https://github.com/user-attachments/assets/316ed978-dac7-464d-a6a0-b1a1c8ea336c">
+
 
 
 
