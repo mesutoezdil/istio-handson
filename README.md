@@ -398,6 +398,7 @@ Init Containers:
 ```
 
 ### 27. **Navigate to the Add-ons Directory**
+![Screenshot 2024-11-15 at 17 00 50](https://github.com/user-attachments/assets/5ad56da8-ab8c-4fb9-b66f-ede84045e34a)
 
 Navigate to the directory containing the add-ons YAML files:
 ```bash
