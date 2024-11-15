@@ -137,6 +137,8 @@ istio-ingressgateway-8cd544cbd-wnvlg   1/1     Running   0          8m8s
 istiod-6b5fb7b484-7lbjw                1/1     Running   0          8m16s
 ```
 
+For the following manifest.yaml file, we will use only the relevant file in the repository belonging to Google: https://github.com/GoogleCloudPlatform/microservices-demo/blob/main/release/kubernetes-manifests.yaml
+
 ### 15. **Apply Kubernetes Manifest File**
 
 ```bash
