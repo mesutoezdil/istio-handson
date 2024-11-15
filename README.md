@@ -1,5 +1,9 @@
 ### Step-by-Step Guide for Installing Istio 1.24.0 on Kubernetes
 
+It is possible to perform this setup in different environments. I tried it in the [K3s playground environment by iximiuz](https://labs.iximiuz.com/playgrounds/k3s). Below, you can find all the steps and code step by step.
+
+![Screenshot 2024-11-15 at 14 52 50](https://github.com/user-attachments/assets/c73c424b-222b-4138-b707-d7c024baef6a)
+
 ---
 
 ### 1. **Create a Directory for Istio Installation**
