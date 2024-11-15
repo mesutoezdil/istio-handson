@@ -316,6 +316,89 @@ kubectl get pod
 All pods should now have the Istio sidecar container (`istio-proxy`) injected and should be in the `Running` state.
 ![Screenshot 2024-11-15 at 16 56 24](https://github.com/user-attachments/assets/21487ca8-a41d-4e76-b771-ce4c86e4a005)
 
+### 24. **Verify Pods with Istio Sidecar Containers**
+
+Run the following command to list all pods in the default namespace and check if the Istio sidecar containers are injected:
+
+```bash
+kubectl get pod
+```
+
+**Expected Output:**
+```plaintext
+NAME                                     READY   STATUS    RESTARTS   AGE
+adservice-997b6fc95-fvggf                2/2     Running   0          94s
+cartservice-59d7459964-ln7nh             2/2     Running   0          95s
+checkoutservice-855ff8d99-m6tjq          2/2     Running   0          95s
+currencyservice-b7dcd96f5-869xr          2/2     Running   0          94s
+emailservice-69cfd9755c-j8f64            2/2     Running   0          95s
+frontend-c48bb8c56-smp4v                 2/2     Running   0          95s
+loadgenerator-6fd8676bfc-zc92n           2/2     Running   0          95s
+paymentservice-7c56f54965-28xgp          2/2     Running   0          95s
+productcatalogservice-69878b7d5c-64bzq   2/2     Running   0          95s
+recommendationservice-7d59447ccc-h9pkf   2/2     Running   0          95s
+redis-cart-558f8d8d44-4thd4              2/2     Running   0          95s
+shippingservice-fb69f4985-47m9p          2/2     Running   0          94s
+```
+
+Each pod should now show `2/2` under the `READY` column, indicating both the application container and the Istio sidecar container (`istio-proxy`) are running.
+
+---
+
+### 25. **Describe a Pod to Inspect Sidecar Configuration**
+
+Use the `kubectl describe pod` command to examine a specific pod's configuration and ensure the Istio sidecar (`istio-proxy`) is properly injected:
+
+```bash
+kubectl describe pod <pod-name>
+```
+
+For example:
+
+```bash
+kubectl describe pod adservice-997b6fc95-fvggf
+```
+
+**Key Points to Look For:**
+1. **Annotations:**  
+   The pod should have `istio.io/rev: default` and `sidecar.istio.io/status` annotations, confirming sidecar injection.
+
+2. **Containers:**  
+   There should be two containers:
+   - `server`: The primary application container.
+   - `istio-proxy`: The Istio sidecar container.
+
+3. **Init Container:**  
+   The `istio-init` init container should appear under `Init Containers`. This sets up iptables rules for redirecting traffic through the sidecar proxy.
+
+4. **Resource Requests and Limits:**  
+   Verify that resource limits and requests are set correctly for both the application and sidecar containers.
+
+---
+
+### 26. **Verify Istio Sidecar Status**
+
+The following fields in the `kubectl describe pod` output confirm that the Istio sidecar is functioning correctly:
+- **State of `istio-proxy`:** `Running`
+- **Readiness and Liveness Probes:** Ensure HTTP probes for Istio proxy and application containers are configured.
+- **Annotations and Labels:** Check Istio-specific annotations such as `sidecar.istio.io/status`.
+
+**Example Output:**
+```plaintext
+Annotations:
+  istio.io/rev: default
+  sidecar.istio.io/status:
+    {"initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["workload-socket","credential-socket","workload-certs","istio-envoy","istio-data"]}
+
+Containers:
+  - server (Application)
+  - istio-proxy (Sidecar)
+Init Containers:
+  - istio-init
+```
+
+---
+
 
 
 
