@@ -7,14 +7,6 @@
 
 It is possible to perform this setup in different environments. I tried it in the [K3s playground environment by iximiuz](https://labs.iximiuz.com/playgrounds/k3s). Below, you can find all the steps and code step by step.
 
-istio-installation/
-├── istio-1.24.0/
-│   ├── bin/
-│   ├── samples/
-│   ├── manifests/
-│   └── ...
-├── kubernetes-manifests.yaml
-
 ![Screenshot 2024-11-15 at 14 52 50](https://github.com/user-attachments/assets/c73c424b-222b-4138-b707-d7c024baef6a)
 
 ---
@@ -547,8 +539,8 @@ Use `kubectl port-forward` to access the dashboards locally:
 Open the respective dashboards in your browser using `localhost:<PORT>`.
 
 ### Dashboard Overview
-- **Kiali Dashboard**: View and manage Istio's service mesh topology.
-- **Grafana Dashboard**: Pre-configured dashboards for Istio metrics (CPU, memory, latency, etc.).
-- **Prometheus Dashboard**: Query Istio and Kubernetes metrics directly.
-- **Jaeger Dashboard**: Trace requests across microservices for debugging and performance analysis.
+- **Kiali Dashboard**: View and manage Istio's service mesh topology
+- **Grafana Dashboard**: Pre-configured dashboards for Istio metrics (CPU, memory, latency, etc.)
+- **Prometheus Dashboard**: Query Istio and Kubernetes metrics directly
+- **Jaeger Dashboard**: Trace requests across microservices for debugging and performance analysis
 
