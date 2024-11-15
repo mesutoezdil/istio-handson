@@ -210,6 +210,113 @@ At this point, all pods should be in the `Running` state.
 ---
 <img width="821" alt="Screenshot 2024-11-15 at 16 01 29" src="https://github.com/user-attachments/assets/01e277fd-377a-408e-98dd-1f97bdb140b9">
 
+### 19. **Check Namespace Labels**
+
+```bash
+kubectl get ns default --show-labels
+```
+
+This command lists the labels of the `default` namespace, where the services are currently deployed.
+
+**Example Output:**
+```plaintext
+NAME      STATUS   AGE    LABELS
+default   Active   102m   kubernetes.io/metadata.name=default
+```
+
+---
+
+### 20. **Enable Istio Sidecar Injection in the `default` Namespace**
+
+```bash
+kubectl label namespace default istio-injection=enabled
+```
+
+This command enables automatic sidecar injection for all pods in the `default` namespace by adding the label `istio-injection=enabled`.
+
+**Example Output:**
+```plaintext
+namespace/default labeled
+```
+
+Verify the label:
+```bash
+kubectl get ns default --show-labels
+```
+
+**Expected Output:**
+```plaintext
+NAME      STATUS   AGE    LABELS
+default   Active   103m   istio-injection=enabled,kubernetes.io/metadata.name=default
+```
+
+---
+
+### 21. **Delete Existing Resources**
+
+Delete all existing resources to allow redeployment with sidecar injection:
+
+```bash
+kubectl delete -f kubernetes-manifests.yaml
+```
+
+**Example Output:**
+```plaintext
+deployment.apps "emailservice" deleted
+service "emailservice" deleted
+serviceaccount "emailservice" deleted
+...
+deployment.apps "adservice" deleted
+service "adservice" deleted
+serviceaccount "adservice" deleted
+```
+
+Verify that no pods are running in the `default` namespace:
+
+```bash
+kubectl get pod
+```
+
+**Expected Output:**
+```plaintext
+No resources found in default namespace.
+```
+
+---
+
+### 22. **Redeploy the Services**
+
+Apply the manifest file again to deploy all services with sidecar injection:
+
+```bash
+kubectl apply -f kubernetes-manifests.yaml
+```
+
+**Example Output:**
+```plaintext
+deployment.apps/emailservice created
+service/emailservice created
+serviceaccount/emailservice created
+...
+deployment.apps/adservice created
+service/adservice created
+serviceaccount/adservice created
+```
+
+---
+
+### 23. **Verify Pods**
+
+Check the status of the pods in the `default` namespace:
+
+```bash
+kubectl get pod
+```
+
+All pods should now have the Istio sidecar container (`istio-proxy`) injected and should be in the `Running` state.
+![Screenshot 2024-11-15 at 16 56 24](https://github.com/user-attachments/assets/21487ca8-a41d-4e76-b771-ce4c86e4a005)
+
+
 
 
 
