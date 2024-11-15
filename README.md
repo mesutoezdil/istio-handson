@@ -397,6 +397,137 @@ Init Containers:
   - istio-init
 ```
 
+### 27. **Navigate to the Add-ons Directory**
+
+Navigate to the directory containing the add-ons YAML files:
+```bash
+cd istio-1.24.0/samples/addons/
+```
+
+---
+
+### 28. **List Available Add-ons**
+
+Check the available YAML files for Istio add-ons:
+```bash
+ls
+```
+
+**Expected Output:**
+```plaintext
+README.md  extras  grafana.yaml  jaeger.yaml  kiali.yaml  loki.yaml  prometheus.yaml
+```
+
+---
+
+### 29. **Deploy the Kiali Dashboard**
+
+Apply the `kiali.yaml` configuration file to set up the Kiali dashboard:
+```bash
+kubectl apply -f kiali.yaml
+```
+
+**Expected Output:**
+```plaintext
+serviceaccount/kiali created
+configmap/kiali created
+clusterrole.rbac.authorization.k8s.io/kiali created
+clusterrolebinding.rbac.authorization.k8s.io/kiali created
+service/kiali created
+deployment.apps/kiali created
+```
+
+---
+
+### 30. **Deploy All Add-ons**
+
+Deploy all the add-ons (Grafana, Jaeger, Loki, Prometheus, etc.) by applying the entire directory:
+```bash
+kubectl apply -f .
+```
+
+**Expected Output:**
+```plaintext
+serviceaccount/grafana created
+configmap/grafana created
+service/grafana created
+deployment.apps/grafana created
+...
+deployment.apps/prometheus created
+```
+
+---
+
+### 31. **Verify Pod Status**
+
+Check the status of the deployed add-ons in the `istio-system` namespace:
+```bash
+kubectl get pod -n istio-system
+```
+
+**Example Output:**
+```plaintext
+NAME                                   READY   STATUS    RESTARTS   AGE
+grafana-6b45c49476-hcmfl               1/1     Running   0          59s
+istio-ingressgateway-8cd544cbd-vglsc   1/1     Running   0          116m
+istiod-6b5fb7b484-sqbh7                1/1     Running   0          116m
+jaeger-54c44d879f-s6krp                1/1     Running   0          59s
+kiali-79b6d98d5d-cr48x                 1/1     Running   0          74s
+loki-0                                 1/2     Running   0          59s
+prometheus-6dd9fd5446-kqqkx            2/2     Running   0          59s
+```
+
+---
+
+### 32. **Verify Services**
+
+Check the services exposed by the add-ons:
+```bash
+kubectl get svc -n istio-system
+```
+
+**Example Output:**
+```plaintext
+NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                          AGE
+grafana                ClusterIP      10.43.243.141   <none>        3000/TCP                                         86s
+istio-ingressgateway   LoadBalancer   10.43.56.56     <pending>     15021:31574/TCP,80:30360/TCP,443:31875/TCP       116m
+istiod                 ClusterIP      10.43.193.247   <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP            117m
+jaeger-collector       ClusterIP      10.43.83.203    <none>        14268/TCP,14250/TCP,9411/TCP,4317/TCP,4318/TCP   86s
+kiali                  ClusterIP      10.43.28.80     <none>        20001/TCP,9090/TCP                               101s
+loki                   ClusterIP      10.43.231.28    <none>        3100/TCP,9095/TCP                                86s
+prometheus             ClusterIP      10.43.209.227   <none>        9090/TCP                                         86s
+```
+
+Each service (Grafana, Kiali, Prometheus, Jaeger, etc.) should be listed and accessible on their respective ports.
+
+---
+
+### 33. **Access Dashboards**
+
+Use `kubectl port-forward` to access the dashboards locally:
+
+- **Kiali:**
+  ```bash
+  kubectl port-forward -n istio-system svc/kiali 20001:20001
+  ```
+
+- **Grafana:**
+  ```bash
+  kubectl port-forward -n istio-system svc/grafana 3000:3000
+  ```
+
+- **Prometheus:**
+  ```bash
+  kubectl port-forward -n istio-system svc/prometheus 9090:9090
+  ```
+
+- **Jaeger:**
+  ```bash
+  kubectl port-forward -n istio-system svc/jaeger-collector 16686:16686
+  ```
+
+Open the respective dashboards in your browser using `localhost:<PORT>`.
+
 ---
 
 
