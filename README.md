@@ -323,7 +323,7 @@ kubectl get pod
 ```
 
 All pods should now have the Istio sidecar container (`istio-proxy`) injected and should be in the `Running` state.
-<img width="1193" alt="Screenshot 2024-11-15 at 17 03 39" src="https://github.com/user-attachments/assets/71f21ac5-ba86-4d80-b5ba-a77618ab4047">
+<img width="786" alt="Screenshot 2024-11-15 at 17 28 56" src="https://github.com/user-attachments/assets/d159f89e-3fee-4831-9671-5f7b846ef9d2">
 
 ### 24. **Verify Pods with Istio Sidecar Containers**
 
