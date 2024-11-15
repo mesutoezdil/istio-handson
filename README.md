@@ -1,6 +1,19 @@
 ### Step-by-Step Guide for Installing Istio 1.24.0 on Kubernetes
 
+### Pre-requisites
+- A Kubernetes cluster running and accessible (`kubectl get nodes` should return nodes)
+- Kubernetes CLI (`kubectl`) installed and configured
+- Sufficient resources on the cluster (2 CPUs, 4GB RAM recommended for Istio + Add-ons)
+
 It is possible to perform this setup in different environments. I tried it in the [K3s playground environment by iximiuz](https://labs.iximiuz.com/playgrounds/k3s). Below, you can find all the steps and code step by step.
+
+istio-installation/
+├── istio-1.24.0/
+│   ├── bin/
+│   ├── samples/
+│   ├── manifests/
+│   └── ...
+├── kubernetes-manifests.yaml
 
 ![Screenshot 2024-11-15 at 14 52 50](https://github.com/user-attachments/assets/c73c424b-222b-4138-b707-d7c024baef6a)
 
@@ -137,7 +150,8 @@ istio-ingressgateway-8cd544cbd-wnvlg   1/1     Running   0          8m8s
 istiod-6b5fb7b484-7lbjw                1/1     Running   0          8m16s
 ```
 
-For the following manifest.yaml file, we will use only the relevant file in the repository belonging to Google: https://github.com/GoogleCloudPlatform/microservices-demo/blob/main/release/kubernetes-manifests.yaml
+Download the file from [Google's Microservices Demo Repository](https://github.com/GoogleCloudPlatform/microservices-demo/blob/main/release/kubernetes-manifests.yaml).
+Save it as `kubernetes-manifests.yaml` in the `istio-installation` directory.
 
 ### 15. **Apply Kubernetes Manifest File**
 
@@ -227,6 +241,9 @@ default   Active   102m   kubernetes.io/metadata.name=default
 ---
 
 ### 20. **Enable Istio Sidecar Injection in the `default` Namespace**
+
+This enables automatic sidecar injection, meaning Istio will add a sidecar proxy (`istio-proxy`) to each pod in the namespace. This proxy intercepts traffic for service mesh features like traffic control, monitoring, and security.
+
 
 ```bash
 kubectl label namespace default istio-injection=enabled
@@ -529,10 +546,9 @@ Use `kubectl port-forward` to access the dashboards locally:
 
 Open the respective dashboards in your browser using `localhost:<PORT>`.
 
----
-
-
-
-
-
+### Dashboard Overview
+- **Kiali Dashboard**: View and manage Istio's service mesh topology.
+- **Grafana Dashboard**: Pre-configured dashboards for Istio metrics (CPU, memory, latency, etc.).
+- **Prometheus Dashboard**: Query Istio and Kubernetes metrics directly.
+- **Jaeger Dashboard**: Trace requests across microservices for debugging and performance analysis.
 
