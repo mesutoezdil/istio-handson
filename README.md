@@ -119,3 +119,23 @@ This will install the Istio 1.24.0 profile "default" into the cluster. Proceed? 
 The Istio control plane and ingress gateway are successfully installed in the cluster.
 
 ---
+13. Verify Istio Installation Namespaces
+bash
+Code kopieren
+kubectl get ns
+This command lists all namespaces in the Kubernetes cluster. You should see the istio-system namespace, which is created as part of the Istio installation.
+
+14. Check Istio Pods in the istio-system Namespace
+bash
+Code kopieren
+kubectl get pod -n istio-system
+This verifies that the Istio control plane (istiod) and ingress gateway pods are running successfully.
+
+Expected Output:
+
+plaintext
+Code kopieren
+NAME                                   READY   STATUS    RESTARTS   AGE
+istio-ingressgateway-8cd544cbd-wnvlg   1/1     Running   0          8m8s
+istiod-6b5fb7b484-7lbjw                1/1     Running   0          8m16s
+
